@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Kalash Dhangare | Full Stack Developer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portfolio of Kalash Dhangare, a full stack Python developer from Nagpur, available immediately.">
+<meta property="og:title" content="Kalash Dhangare | Full Stack Developer">
+<meta property="og:description" content="Python, Django, Flask and REST APIs. Immediate joiner based in Nagpur, India.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="light dark">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single column of "routes" (sections named like API paths); hero pairs the intro with a JSON response card that wraps below on phones. */
+:root {
+  --bg: #f1f4f4;
+  --surface: #ffffff;
+  --fg: #0f1b21;
+  --muted: #566a73;
+  --line: #d5dde0;
+  --accent: #0b7a6a;
+  --accent-soft: #d8efea;
+  --accent-fg: #ffffff;
+  --live: #e2572b;
+  --code-bg: #0f1b21;
+  --code-fg: #d7e4e8;
+  --code-key: #7fd8c6;
+  --code-str: #f2c48a;
+  --code-dim: #7f939b;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1216;
+    --surface: #111d23;
+    --fg: #e6eff2;
+    --muted: #92a6ae;
+    --line: #22343c;
+    --accent: #43d1b5;
+    --accent-soft: #123a35;
+    --accent-fg: #06201b;
+    --live: #ff7a4d;
+    --code-bg: #070d10;
+    --code-fg: #d7e4e8;
+    --code-key: #7fd8c6;
+    --code-str: #f2c48a;
+    --code-dim: #6f838b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a1216;
+  --surface: #111d23;
+  --fg: #e6eff2;
+  --muted: #92a6ae;
+  --line: #22343c;
+  --accent: #43d1b5;
+  --accent-soft: #123a35;
+  --accent-fg: #06201b;
+  --live: #ff7a4d;
+  --code-bg: #070d10;
+  --code-fg: #d7e4e8;
+  --code-key: #7fd8c6;
+  --code-str: #f2c48a;
+  --code-dim: #6f838b;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-block: 20px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -.02em; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* top bar */
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mark { font-family: var(--mono); font-size: 14px; color: var(--muted); }
+.mark b { color: var(--fg); font-weight: 500; }
+.bar nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.bar nav a {
+  font-family: var(--mono); font-size: 13px; text-decoration: none; color: var(--muted);
+  padding: 6px 10px; border-radius: 8px;
+}
+.bar nav a:hover { color: var(--fg); background: var(--surface); }
+.theme {
+  font: inherit; font-family: var(--mono); font-size: 13px; cursor: pointer;
+  color: var(--muted); background: transparent; border: 1px solid var(--line);
+  border-radius: 8px; padding: 5px 10px;
+}
+.theme:hover { color: var(--fg); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-top: 24px; }
+.avail {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 13px; color: var(--fg);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px 5px 10px;
+}
+.avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--live); display: block; box-shadow: 0 0 0 4px color-mix(in srgb, var(--live) 22%, transparent); }
+.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1; font-weight: 700; margin-top: 18px; }
+.role { font-family: var(--display); font-weight: 500; font-size: clamp(1.15rem, 3.2vw, 1.5rem); color: var(--accent); margin-top: 14px; letter-spacing: -.01em; }
+.reach { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px; font-family: var(--mono); font-size: 14px; }
+.reach li { display: flex; gap: 14px; flex-wrap: wrap; min-width: 0; overflow-wrap: anywhere; }
+.reach span { color: var(--muted); min-width: 68px; }
+.lede { margin-top: 16px; color: var(--muted); max-width: 52ch; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.btn {
+  font: inherit; font-weight: 500; font-size: 15px; text-decoration: none; cursor: pointer;
+  border-radius: 10px; padding: 11px 18px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--fg);
+}
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: transparent; }
+.btn:hover { filter: brightness(.96); }
+
+.code {
+  background: var(--code-bg); color: var(--code-fg); border-radius: 16px;
+  font-family: var(--mono); font-size: 13.5px; line-height: 1.7;
+  overflow-x: auto; min-width: 0; border: 1px solid var(--line);
+}
+.code .head { display: flex; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,.08); color: var(--code-dim); white-space: nowrap; }
+.code .ok { color: var(--code-key); }
+.code pre { margin: 0; padding: 16px 18px 20px; font: inherit; }
+.k { color: var(--code-key); } .s { color: var(--code-str); } .d { color: var(--code-dim); }
+
+/* sections */
+section > header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
+.route { font-family: var(--mono); font-size: 14px; color: var(--accent); }
+section h2 { font-size: clamp(1.7rem, 4.5vw, 2.3rem); font-weight: 700; }
+.about { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 68ch; font-size: 17px; }
+
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.group { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+.group h3 { font-size: 15px; font-family: var(--mono); font-weight: 500; letter-spacing: 0; color: var(--muted); margin-bottom: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 14px; background: var(--accent-soft); color: var(--fg); border-radius: 8px; padding: 4px 10px; }
+
+.timeline { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.job { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 8px 32px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.when { font-family: var(--mono); font-size: 13.5px; color: var(--muted); }
+.job h3 { font-size: 1.3rem; font-weight: 500; }
+.org { color: var(--muted); margin-top: 2px; }
+.job ul { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 8px; }
+.todo { font-family: var(--mono); font-size: 12px; color: var(--live); border: 1px dashed var(--live); border-radius: 6px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
+
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card.ph { border-style: dashed; background: transparent; }
+.card h3 { font-size: 1.2rem; font-weight: 500; }
+.card p { color: var(--muted); font-size: 15px; }
+.card .chips { margin-top: auto; padding-top: 6px; }
+.card .chip { font-family: var(--mono); font-size: 12.5px; }
+
+.edu { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.edu .job { padding: 20px 0; }
+.certs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 28px; }
+.cert { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; font-weight: 500; }
+.cert small { display: block; font-family: var(--mono); font-weight: 400; font-size: 12.5px; color: var(--muted); }
+
+.contact { background: var(--code-bg); color: var(--code-fg); border-radius: 22px; padding: clamp(24px, 5vw, 44px); display: grid; gap: 20px; border: 1px solid var(--line); }
+.contact h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); color: var(--code-fg); }
+.contact p { color: var(--code-dim); max-width: 50ch; }
+.contact .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.mail { font-family: var(--mono); font-size: 15px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 10px 14px; overflow-wrap: anywhere; color: var(--code-fg); }
+.contact .btn { background: var(--code-key); color: #06201b; border-color: transparent; }
+.contact .btn.alt { background: transparent; color: var(--code-fg); border-color: rgba(255,255,255,.25); }
+footer { font-family: var(--mono); font-size: 13px; color: var(--muted); text-align: center; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .job { grid-template-columns: minmax(0, 1fr); }
+  .wrap { gap: 56px; }
+}
+body{margin:0}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bar">
+    <div class="mark"><b>kalash</b>@nagpur:~$</div>
+    <nav aria-label="Sections">
+      <a href="#about">/about</a>
+      <a href="#skills">/skills</a>
+      <a href="#experience">/experience</a>
+      <a href="#projects">/projects</a>
+      <a href="#contact">/contact</a>
+      <button class="theme" id="theme" type="button" aria-label="Switch theme">theme</button>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <div>
+      <span class="avail"><i></i>Immediate joiner</span>
+      <h1>Kalash Dhangare</h1>
+      <p class="role">Full Stack Developer · Python, Django, Flask</p>
+      <ul class="reach" aria-label="Contact details">
+        <li><span>linkedin</span><a href="https://www.linkedin.com/in/kalash-dhangare-647674264/" target="_blank" rel="noopener" aria-label="Kalash Dhangare on LinkedIn, opens in a new tab">Kalash Dhangare on LinkedIn ↗</a></li>
+        <li><span>email</span><a href="mailto:kalash.r.dhangare@gmail.com">kalash.r.dhangare@gmail.com</a></li>
+        <li><span>location</span>Nagpur, Maharashtra, India</li>
+      </ul>
+      <p class="lede">I build scalable web applications and REST APIs. I have shipped a live client website, and my engineering background in electronics and telecommunication keeps me curious about where hardware meets software.</p>
+      <div class="cta">
+        <a class="btn primary" href="#contact">Get in touch</a>
+        <a class="btn" href="https://www.linkedin.com/in/kalash-dhangare-647674264/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="code" role="img" aria-label="Profile summary shown as an API response">
+      <div class="head"><span>GET /candidates/kalash-dhangare</span><span class="ok">200 OK</span></div>
+<pre><span class="d">{</span>
+  <span class="k">"role"</span>: <span class="s">"Full Stack Developer"</span>,
+  <span class="k">"languages"</span>: <span class="d">[</span><span class="s">"Python"</span>, <span class="s">"Java"</span><span class="d">]</span>,
+  <span class="k">"frameworks"</span>: <span class="d">[</span><span class="s">"Django"</span>, <span class="s">"Flask"</span><span class="d">]</span>,
+  <span class="k">"databases"</span>: <span class="d">[</span><span class="s">"MySQL"</span>, <span class="s">"MongoDB"</span><span class="d">]</span>,
+  <span class="k">"tools"</span>: <span class="d">[</span><span class="s">"Postman"</span>, <span class="s">"REST APIs"</span><span class="d">]</span>,
+  <span class="k">"location"</span>: <span class="s">"Nagpur, IN"</span>,
+  <span class="k">"availability"</span>: <span class="s">"immediate"</span>
+<span class="d">}</span></pre>
+    </div>
+  </header>
+
+  <section id="about">
+    <header><span class="route">/about</span><h2>Software engineer who ships</h2></header>
+    <div class="about">
+      <p>I am a software engineer with a foundation in Python, Java, and data structures and algorithms. I learn by building: most recently I worked as a Python developer, where I built and shipped a live client website.</p>
+      <p>My degree is in Electronics &amp; Telecommunication Engineering, so I enjoy problems that sit between hardware and software. I am ready to join a team right away.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <header><span class="route">/skills</span><h2>What I work with</h2></header>
+    <div class="skills">
+      <div class="group"><h3>languages</h3><div class="chips"><span class="chip">Python</span><span class="chip">Java</span></div></div>
+      <div class="group"><h3>frameworks</h3><div class="chips"><span class="chip">Django</span><span class="chip">Flask</span></div></div>
+      <div class="group"><h3>databases</h3><div class="chips"><span class="chip">MySQL</span><span class="chip">MongoDB</span></div></div>
+      <div class="group"><h3>api &amp; tools</h3><div class="chips"><span class="chip">REST API</span><span class="chip">Postman</span><span class="chip">Google Cloud</span></div></div>
+      <div class="group"><h3>fundamentals</h3><div class="chips"><span class="chip">Data Structures</span><span class="chip">Algorithms</span></div></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <header><span class="route">/experience</span><h2>Where I have worked</h2></header>
+    <div class="timeline">
+      <article class="job">
+        <div class="when">Dec 2025 – Jun 2026<br>7 months</div>
+        <div>
+          <h3>Python Developer</h3>
+          <p class="org">Cyberathon Technology Pvt. Ltd · Nagpur, Maharashtra</p>
+          <ul>
+            <li>Built and shipped a live client website as part of hands-on full-stack development work.</li>
+            <li>Add what you built, the tools you used and a result, for example "cut page load time by 40%". <span class="todo">your detail</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">Jun 2023 – Jun 2026<br>3 years 1 month</div>
+        <div>
+          <h3>Member</h3>
+          <p class="org">GDSC JDCOEM · Google Developer Student Club</p>
+          <ul>
+            <li>Add the workshops, events or projects you took part in. <span class="todo">your detail</span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects">
+    <header><span class="route">/projects</span><h2>Selected work</h2></header>
+    <div class="projects">
+      <article class="card">
+        <h3>Live client website</h3>
+        <p>A production website I built and shipped at Cyberathon Technology. Add the client's industry, what the site does and your link.</p>
+        <span class="todo" style="align-self:flex-start;margin-left:0">add link</span>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Full stack</span></div>
+      </article>
+      <article class="card ph">
+        <h3>Project two</h3>
+        <p>Placeholder. Describe the problem, what you built and how it turned out. A REST API project with a Postman collection would fit well here.</p>
+        <span class="todo" style="align-self:flex-start;margin-left:0">placeholder</span>
+        <div class="chips"><span class="chip">Django</span><span class="chip">MySQL</span></div>
+      </article>
+      <article class="card ph">
+        <h3>Project three</h3>
+        <p>Placeholder. A hardware-software project would connect your electronics background to your development skills.</p>
+        <span class="todo" style="align-self:flex-start;margin-left:0">placeholder</span>
+        <div class="chips"><span class="chip">Flask</span><span class="chip">MongoDB</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="education">
+    <header><span class="route">/education</span><h2>Education &amp; certifications</h2></header>
+    <div class="edu">
+      <article class="job">
+        <div class="when">B.Tech</div>
+        <div><h3>Electronics &amp; Telecommunication</h3><p class="org">J D College of Engineering &amp; Management</p></div>
+      </article>
+      <article class="job">
+        <div class="when">2019 – 2021</div>
+        <div><h3>Higher Secondary, Computer Science</h3><p class="org">P.M.B.S. Arts, Commerce &amp; Computer Science College &amp; Convent</p></div>
+      </article>
+      <article class="job">
+        <div class="when">2019</div>
+        <div><h3>Carmel Academy Higher Secondary School</h3></div>
+      </article>
+    </div>
+    <div class="certs">
+      <div class="cert"><small>certification</small>Google Cloud Computing Certificate</div>
+      <div class="cert"><small>certification</small>Java with Data Structures and Algorithms</div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Ready to start immediately.</h2>
+    <p>I am looking for a full stack or Python developer role. Send me a message and I will reply quickly.</p>
+    <div class="row">
+      <span class="mail" id="mail">kalash.r.dhangare@gmail.com</span>
+      <button class="btn" id="copy" type="button">Copy email</button>
+      <a class="btn alt" href="https://www.linkedin.com/in/kalash-dhangare-647674264/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>Kalash Dhangare · Nagpur, India</footer>
+</div>
+
+<script>
+(function () {
+  document.getElementById("theme").addEventListener("click", function () {
+    var root = document.documentElement;
+    var cur = root.getAttribute("data-theme");
+    if (!cur) cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+  });
+  var copy = document.getElementById("copy");
+  copy.addEventListener("click", function () {
+    var text = document.getElementById("mail").textContent;
+    function done() { copy.textContent = "Copied"; setTimeout(function () { copy.textContent = "Copy email"; }, 1600); }
+    function fallback() {
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById("mail"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copy.textContent = "Press Ctrl+C";
+    }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
