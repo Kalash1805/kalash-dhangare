@@ -136,6 +136,14 @@ p { margin: 0; }
 .code pre { margin: 0; padding: 16px 18px 20px; font: inherit; }
 .k { color: var(--code-key); } .s { color: var(--code-str); } .d { color: var(--code-dim); }
 
+/* Full-page 3D scene (Three.js): fixed behind all content, driven by scroll */
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.wrap { position: relative; z-index: 1; }
+
+/* Hover tilt on cards (set by script on devices with a mouse) */
+.tilt { transition: transform .18s ease-out, box-shadow .18s ease-out; will-change: transform; }
+.tilt.is-tilting { transition: transform .05s linear; box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); }
+
 /* sections */
 section > header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
 .route { font-family: var(--mono); font-size: 14px; color: var(--accent); }
@@ -190,6 +198,7 @@ html{scroll-behavior:smooth}
 </head>
 <body>
 
+<canvas id="scene" aria-hidden="true"></canvas>
 <div class="wrap">
   <div class="bar">
     <div class="mark"><b>kalash</b>@nagpur:~$</div>
@@ -261,8 +270,8 @@ html{scroll-behavior:smooth}
           <h3>Python Developer</h3>
           <p class="org">Cyberathon Technology Pvt. Ltd · Nagpur, Maharashtra</p>
           <ul>
-            <li>Built and shipped a live client website as part of hands-on full-stack development work.</li>
-            <li>Add what you built, the tools you used and a result, for example "cut page load time by 40%". <span class="todo">your detail</span></li>
+            <li>Built and launched the full website for KCOZM Salon, a premium salon chain, covering front end, back end and deployment.</li>
+            <li>Add the tools you used and one result, such as page speed or bookings. <span class="todo">your detail</span></li>
           </ul>
         </div>
       </article>
@@ -283,10 +292,11 @@ html{scroll-behavior:smooth}
     <header><span class="route">/projects</span><h2>Selected work</h2></header>
     <div class="projects">
       <article class="card">
-        <h3>Live client website</h3>
-        <p>A production website I built and shipped at Cyberathon Technology. Add the client's industry, what the site does and your link.</p>
-        <span class="todo" style="align-self:flex-start;margin-left:0">add link</span>
-        <div class="chips"><span class="chip">Python</span><span class="chip">Full stack</span></div>
+        <h3>KCOZM Salon website</h3>
+        <p>Built and launched the complete website for KCOZM Salon, a premium salon chain, as a Python developer at Cyberathon Technology. I handled the work from front end to back end through to going live, delivering a production site for a real client.</p>
+        <p><a href="https://www.kcozmsalon.com/" target="_blank" rel="noopener">Visit kcozmsalon.com ↗</a></p>
+        <span class="todo" style="align-self:flex-start;margin-left:0">add your stack and key features</span>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Full stack</span><span class="chip">Client project</span></div>
       </article>
       <article class="card ph">
         <h3>Project two</h3>
@@ -357,6 +367,214 @@ html{scroll-behavior:smooth}
       copy.textContent = "Press Ctrl+C";
     }
     try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* Full-page 3D scene. A fixed canvas sits behind the whole site; the shape moves
+   between the sides as you scroll through each section and spins with the scroll.
+   Skips itself if WebGL or Three.js is unavailable. */
+(function () {
+  var canvas = document.getElementById("scene");
+  if (!canvas) return;
+  if (!window.THREE) { canvas.remove(); return; }
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true }); }
+  catch (e) { canvas.remove(); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.z = 11;
+
+  // Round dots instead of the default squares.
+  var dotCanvas = document.createElement("canvas");
+  dotCanvas.width = dotCanvas.height = 64;
+  var g = dotCanvas.getContext("2d");
+  g.beginPath(); g.arc(32, 32, 30, 0, Math.PI * 2); g.fillStyle = "#fff"; g.fill();
+  var sprite = new THREE.CanvasTexture(dotCanvas);
+
+  var lineMat  = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.5 });
+  var innerMat = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.4 });
+  var ringMat  = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.25 });
+  var nodeMat  = new THREE.PointsMaterial({ size: 0.17, map: sprite, alphaTest: 0.3, transparent: true, opacity: 0.95 });
+  var dustMat  = new THREE.PointsMaterial({ size: 0.07, map: sprite, alphaTest: 0.3, transparent: true, opacity: 0.55 });
+  var hotMat   = new THREE.PointsMaterial({ size: 0.3, map: sprite, alphaTest: 0.3, transparent: true });
+
+  var group = new THREE.Group();
+  scene.add(group);
+
+  var ico = new THREE.IcosahedronGeometry(3, 1);
+  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(ico), lineMat));
+  group.add(new THREE.Points(ico, nodeMat));
+
+  var inner = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.OctahedronGeometry(1.5, 0)), innerMat);
+  group.add(inner);
+
+  // A tilted orbit with six glowing nodes, like requests moving between services.
+  var ring = new THREE.Group();
+  ring.rotation.x = 1.15;
+  var circle = [], hotPos = [];
+  for (var i = 0; i < 96; i++) {
+    var a = (i / 96) * Math.PI * 2;
+    circle.push(new THREE.Vector3(Math.cos(a) * 4.4, Math.sin(a) * 4.4, 0));
+  }
+  for (var j = 0; j < 6; j++) {
+    var b = (j / 6) * Math.PI * 2;
+    hotPos.push(Math.cos(b) * 4.4, Math.sin(b) * 4.4, 0);
+  }
+  ring.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(circle), ringMat));
+  var hotGeo = new THREE.BufferGeometry();
+  hotGeo.setAttribute("position", new THREE.Float32BufferAttribute(hotPos, 3));
+  ring.add(new THREE.Points(hotGeo, hotMat));
+  group.add(ring);
+
+  // Background dust in two stacked copies so it can scroll upward without a visible seam.
+  var DUST = 150, FIELD = 13, dustPos = new Float32Array(DUST * 3);
+  for (var k = 0; k < DUST; k++) {
+    dustPos[k * 3]     = (Math.random() - 0.5) * 26;
+    dustPos[k * 3 + 1] = (Math.random() - 0.5) * FIELD;
+    dustPos[k * 3 + 2] = (Math.random() - 0.5) * 8 - 2;
+  }
+  var dustGeo = new THREE.BufferGeometry();
+  dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
+  var dustA = new THREE.Points(dustGeo, dustMat);
+  var dustB = new THREE.Points(dustGeo, dustMat);
+  scene.add(dustA); scene.add(dustB);
+
+  function cssColor(name, fallback) {
+    var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return new THREE.Color(v || fallback);
+  }
+  function applyColors() {
+    var accent = cssColor("--accent", "#0b7a6a");
+    lineMat.color.copy(accent); innerMat.color.copy(accent); ringMat.color.copy(accent);
+    nodeMat.color.copy(accent); dustMat.color.copy(accent);
+    hotMat.color.copy(cssColor("--live", "#e2572b"));
+    if (!running) draw(0);
+  }
+
+  // Sections the shape follows, and which side it sits on for each (1 = right, -1 = left).
+  var sections = [".hero", "#about", "#skills", "#experience", "#projects", "#education", "#contact"]
+    .map(function (s) { return document.querySelector(s); });
+  var sides = [1, 1, -1, 1, -1, 1, -1];
+
+  var vw = 1, vh = 1;
+  function resize() {
+    vw = window.innerWidth; vh = window.innerHeight;
+    renderer.setSize(vw, vh, false);
+    camera.aspect = vw / vh;
+    camera.updateProjectionMatrix();
+    if (!running) draw(0);
+  }
+
+  function activeSection() {
+    var mid = vh * 0.45, idx = 0;
+    for (var s = 0; s < sections.length; s++) {
+      if (sections[s] && sections[s].getBoundingClientRect().top <= mid) idx = s;
+    }
+    return idx;
+  }
+
+  var mx = 0, my = 0, tx = 0, ty = 0, t0 = performance.now();
+  window.addEventListener("pointermove", function (e) {
+    mx = e.clientX / vw - 0.5;
+    my = e.clientY / vh - 0.5;
+  }, { passive: true });
+
+  var posX = 0, posY = 0, sc = 1, fade = 1, snapped = false;
+  function draw(now) {
+    var t = (now - t0) / 1000;
+    var scrollY = window.scrollY || 0;
+    var halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+    var halfW = halfH * camera.aspect;
+    var wide = vw > 760;
+    var idx = activeSection();
+
+    var targetX, targetY, targetS, targetFade;
+    if (wide) {
+      targetX = sides[idx] * halfW * (idx === 0 ? 0.42 : 0.74);
+      targetY = idx === 0 ? 0 : Math.sin(scrollY * 0.002) * halfH * 0.25;
+      targetS = idx === 0 ? 1 : 0.85;
+      targetFade = idx === 0 ? 1 : 0.6;
+    } else {
+      targetX = halfW * 0.5; targetY = halfH * 0.8;
+      targetS = Math.min(1, halfW / 7);
+      targetFade = 0.3;
+    }
+    var ease = snapped ? 0.05 : 1;   // first frame lands in place, later frames glide
+    posX += (targetX - posX) * ease; posY += (targetY - posY) * ease;
+    sc += (targetS - sc) * ease; fade += (targetFade - fade) * ease;
+    snapped = true;
+
+    tx += (mx * 0.6 - tx) * 0.05;
+    ty += (my * 0.4 - ty) * 0.05;
+
+    group.position.set(posX, posY, 0);
+    group.scale.setScalar(sc);
+    group.rotation.y = 0.6 + t * 0.18 + scrollY * 0.002 + tx;
+    group.rotation.x = 0.35 + ty + Math.sin(t * 0.3) * 0.05 + scrollY * 0.0004;
+    inner.rotation.y = -t * 0.5;
+    inner.rotation.x = t * 0.3 + scrollY * 0.001;
+    ring.rotation.z = 0.8 + t * 0.25;
+
+    // Dust drifts upward as the page scrolls, giving a sense of depth.
+    var off = (scrollY * 0.004) % FIELD;
+    dustA.position.y = -off;
+    dustB.position.y = -off + FIELD;
+
+    canvas.style.opacity = fade.toFixed(3);
+    renderer.render(scene, camera);
+  }
+
+  var running = false, raf = 0;
+  function frame(now) {
+    if (!running) return;
+    raf = requestAnimationFrame(frame);
+    draw(now);
+  }
+  function start() {
+    if (reduce || running || document.hidden) return;
+    running = true; raf = requestAnimationFrame(frame);
+  }
+  function stop() { running = false; cancelAnimationFrame(raf); }
+
+  applyColors();
+  resize();
+  window.addEventListener("resize", resize);
+  if (reduce) window.addEventListener("scroll", function () { draw(0); }, { passive: true });
+  document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+
+  // Follow the theme toggle and the system light/dark setting.
+  new MutationObserver(applyColors).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", applyColors);
+
+  start();
+})();
+
+/* 3D hover tilt on cards, only for visitors with a mouse who have not asked for reduced motion. */
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  var MAX = 6; // degrees
+  document.querySelectorAll(".group, .card, .cert, .code").forEach(function (el) {
+    el.classList.add("tilt");
+    el.addEventListener("pointermove", function (e) {
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      el.classList.add("is-tilting");
+      el.style.transform = "perspective(900px) rotateX(" + (-py * MAX).toFixed(2) + "deg) rotateY(" + (px * MAX).toFixed(2) + "deg) translateZ(0)";
+    });
+    el.addEventListener("pointerleave", function () {
+      el.classList.remove("is-tilting");
+      el.style.transform = "";
+    });
   });
 })();
 </script>
