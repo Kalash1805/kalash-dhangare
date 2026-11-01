@@ -153,6 +153,18 @@ p { margin: 0; }
   border-radius: 0.625rem; padding: 0.6875rem 1.125rem; border: 1px solid var(--line);
   background: var(--surface); color: var(--fg);
 }
+.social { display: inline-flex; flex-wrap: wrap; gap: 0.625rem; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.05rem 0.75rem 0.95rem; border: 1px solid var(--line); border-radius: 999px; color: var(--fg); text-decoration: none; font-family: var(--mono); font-size: 0.875rem; line-height: 1; transition: transform .2s, border-color .2s, background-color .2s; }
+.pill svg { width: 1.1rem; height: 1.1rem; flex: none; color: var(--accent); }
+.pill .arr { width: 0.8rem; height: 0.8rem; color: var(--muted); transition: transform .2s, color .2s; }
+.pill:hover, .pill:focus-visible { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); }
+.pill:hover .arr, .pill:focus-visible .arr { color: var(--accent); transform: translate(2px, -2px); }
+.contact .social { display: flex; }
+.contact .pill svg:not(.arr) { color: var(--code-key); }
+.contact .pill { color: var(--code-fg); border-color: rgba(255,255,255,.18); }
+.contact .pill:hover, .contact .pill:focus-visible { background: rgba(67,209,181,.14); border-color: var(--code-key); }
+@media (max-width: 480px) { .hero .social { gap: 0.4rem; } .hero .pill { padding: 0.65rem 0.7rem 0.65rem 0.65rem; font-size: 0.8rem; gap: 0.35rem; } .hero .pill .arr { display: none; } }
+@media (prefers-reduced-motion: reduce) { .pill, .pill .arr { transition: none; } .pill:hover { transform: none; } }
 .btn.primary { background: var(--accent); color: var(--accent-fg); border-color: transparent; }
 .btn:hover { filter: brightness(.96); }
 
@@ -242,11 +254,17 @@ html{scroll-behavior:smooth}
 /* Landscape screens (laptops, TVs): tighten the opening screen so the buttons clear the bottom bar */
 @media (min-aspect-ratio: 5/4) {
   .hero { padding-top: 0.25rem; }
-  .hero h1 { margin-top: 0.6rem; }
-  .role { margin-top: 0.5rem; }
+  .hero h1 { margin-top: 0.6rem; font-size: clamp(2.6rem, 4.6vw, 4rem); }
+  .role { margin-top: 0.5rem; font-size: clamp(1.1rem, 1.6vw, 1.5rem); }
+  .reach { gap: 0.2rem; }
   .reach { margin-top: 0.8rem; }
   .lede { margin-top: 0.8rem; }
   .cta { margin-top: 1.2rem; }
+}
+@media (min-aspect-ratio: 5/4) and (max-height: 760px) {
+  .hero h1 { font-size: clamp(2.2rem, 3.6vw, 3.2rem); }
+  .lede { margin-top: 0.6rem; }
+  .cta { margin-top: 0.9rem; }
 }
 </style>
 </head>
@@ -271,8 +289,7 @@ html{scroll-behavior:smooth}
       </ul>
       <p class="lede">I build scalable web applications and REST APIs. I have shipped a live client website, and my engineering background in electronics and telecommunication keeps me curious about where hardware meets software.</p>
       <div class="cta">
-        <a class="btn primary" href="#contact">Get in touch</a>
-        <a class="btn" href="https://www.linkedin.com/in/kalash-dhangare-647674264/" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="social"><a class="pill" id="mailpill" href="https://mail.google.com/mail/?view=cm&fs=1&to=kalash.r.dhangare@gmail.com&su=Opportunity%20for%20Kalash%20Dhangare" target="_blank" rel="noopener" aria-label="Email Kalash, opens Gmail in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg><span>Email</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a><a class="pill" href="https://github.com/Kalash1805" target="_blank" rel="noopener" aria-label="Kalash on GitHub, opens in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="8.5" r="2.2"/><path d="M6 7.7v8.6"/><path d="M18 10.7c0 4-4 4.6-9.6 6.4"/></svg><span>GitHub</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a><a class="pill" href="https://codepen.io/Kalash-1805" target="_blank" rel="noopener" aria-label="Kalash on CodePen, opens in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m9.5 10-2.5 2 2.5 2"/><path d="m14.5 10 2.5 2-2.5 2"/></svg><span>CodePen</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a></span>
       </div>
     </div>
     <div class="code" role="img" aria-label="Profile summary shown as an API response">
@@ -318,7 +335,6 @@ html{scroll-behavior:smooth}
           <p class="org">Cyberathon Technology Pvt. Ltd · Nagpur, Maharashtra</p>
           <ul>
             <li>Built and launched the full website for KCOZM Salon, a premium salon chain, covering front end, back end and deployment.</li>
-            <li>Add the tools you used and one result, such as page speed or bookings. <span class="todo">your detail</span></li>
           </ul>
         </div>
       </article>
@@ -328,7 +344,7 @@ html{scroll-behavior:smooth}
           <h3>Member</h3>
           <p class="org">GDSC JDCOEM · Google Developer Student Club</p>
           <ul>
-            <li>Add the workshops, events or projects you took part in. <span class="todo">your detail</span></li>
+            <li>Member of the college's Google Developer Student Club chapter for three years, alongside my engineering degree.</li>
           </ul>
         </div>
       </article>
@@ -342,20 +358,13 @@ html{scroll-behavior:smooth}
         <h3>KCOZM Salon website</h3>
         <p>Built and launched the complete website for KCOZM Salon, a premium salon chain, as a Python developer at Cyberathon Technology. I handled the work from front end to back end through to going live, delivering a production site for a real client.</p>
         <p><a href="https://www.kcozmsalon.com/" target="_blank" rel="noopener">Visit kcozmsalon.com ↗</a></p>
-        <span class="todo" style="align-self:flex-start;margin-left:0">add your stack and key features</span>
         <div class="chips"><span class="chip">Python</span><span class="chip">Full stack</span><span class="chip">Client project</span></div>
       </article>
-      <article class="card ph">
-        <h3>Project two</h3>
-        <p>Placeholder. Describe the problem, what you built and how it turned out. A REST API project with a Postman collection would fit well here.</p>
-        <span class="todo" style="align-self:flex-start;margin-left:0">placeholder</span>
-        <div class="chips"><span class="chip">Django</span><span class="chip">MySQL</span></div>
-      </article>
-      <article class="card ph">
-        <h3>Project three</h3>
-        <p>Placeholder. A hardware-software project would connect your electronics background to your development skills.</p>
-        <span class="todo" style="align-self:flex-start;margin-left:0">placeholder</span>
-        <div class="chips"><span class="chip">Flask</span><span class="chip">MongoDB</span></div>
+      <article class="card">
+        <h3>TicketDesk API</h3>
+        <p>A REST API for a customer support ticket system, built with Django and Django REST Framework. Customers raise and track tickets while support staff triage, assign and resolve them. Access is role-based, so customers only ever see their own tickets, and each ticket has a comment thread.</p>
+        <p>Includes token authentication, filtering and search, pagination, request throttling, 15 automated tests covering the role rules, and a Postman collection with built-in checks.</p>
+        <div class="chips"><span class="chip">Django</span><span class="chip">REST Framework</span><span class="chip">Token auth</span><span class="chip">Postman</span></div>
       </article>
     </div>
   </section>
@@ -388,8 +397,8 @@ html{scroll-behavior:smooth}
     <div class="row">
       <span class="mail" id="mail">kalash.r.dhangare@gmail.com</span>
       <button class="btn" id="copy" type="button">Copy email</button>
-      <a class="btn alt" href="https://www.linkedin.com/in/kalash-dhangare-647674264/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
+    <div class="social"><a class="pill" href="https://www.linkedin.com/in/kalash-dhangare-647674264/" target="_blank" rel="noopener" aria-label="Kalash on LinkedIn, opens in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span>LinkedIn</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a><a class="pill" href="https://github.com/Kalash1805" target="_blank" rel="noopener" aria-label="Kalash on GitHub, opens in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="8.5" r="2.2"/><path d="M6 7.7v8.6"/><path d="M18 10.7c0 4-4 4.6-9.6 6.4"/></svg><span>GitHub</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a><a class="pill" href="https://codepen.io/Kalash-1805" target="_blank" rel="noopener" aria-label="Kalash on CodePen, opens in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m9.5 10-2.5 2 2.5 2"/><path d="m14.5 10 2.5 2-2.5 2"/></svg><span>CodePen</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a></div>
   </section>
 
   <footer>Kalash Dhangare · Nagpur, India</footer>
@@ -677,6 +686,15 @@ html{scroll-behavior:smooth}
   window.addEventListener("popstate", function () { show(fromHash()); });
   window.addEventListener("hashchange", function () { show(fromHash()); });
   show(fromHash());
+})();
+</script>
+<script>
+(function () {
+  var a = document.getElementById("mailpill");
+  if (a && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    a.href = "mailto:kalash.r.dhangare@gmail.com?subject=Opportunity%20for%20Kalash%20Dhangare";
+    a.removeAttribute("target");
+  }
 })();
 </script>
 </body>
