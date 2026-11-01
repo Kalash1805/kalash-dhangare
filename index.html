@@ -70,99 +70,100 @@
 }
 
 * { box-sizing: border-box; }
+html { font-size: max(16px, calc(0.9375vmax + 4px)); -webkit-text-size-adjust: 100%; }
 body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--body);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.6;
-  padding-block: 20px 120px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 1.25rem 7.5rem;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
 }
-.wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px; }
-a { color: var(--accent); text-underline-offset: 3px; }
+.wrap { max-width: 60rem; margin: 0 auto; display: flex; flex-direction: column; gap: 4.5rem; }
+a { color: var(--accent); text-underline-offset: 0.1875rem; }
 h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -.02em; }
 p { margin: 0; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 0.1875rem solid var(--accent); outline-offset: 0.1875rem; border-radius: 0.25rem; }
 
 /* top bar */
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.mark { font-family: var(--mono); font-size: 14px; color: var(--muted); }
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.mark { font-family: var(--mono); font-size: 0.875rem; color: var(--muted); }
 .mark b { color: var(--fg); font-weight: 500; }
 /* Bottom tab bar (like Instagram / Twitter) */
 .dock {
   position: fixed; z-index: 20; left: 0; right: 0; bottom: 0;
   display: flex; justify-content: center; pointer-events: none;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  padding-bottom: calc(0.875rem + env(safe-area-inset-bottom, 0px));
 }
 .dock ul {
-  list-style: none; margin: 0; padding: 6px; display: flex; gap: 2px; justify-content: space-between;
-  width: 100%; max-width: 540px; pointer-events: auto;
+  list-style: none; margin: 0; padding: 0.375rem; display: flex; gap: 0.125rem; justify-content: space-between;
+  width: 100%; max-width: 33.75rem; pointer-events: auto;
   background: color-mix(in srgb, var(--surface) 84%, transparent);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  border: 1px solid var(--line); border-radius: 999px;
-  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, .4);
+  -webkit-backdrop-filter: blur(0.875rem); backdrop-filter: blur(0.875rem);
+  border: 1px solid var(--line); border-radius: 62.4375rem;
+  box-shadow: 0 0.75rem 2rem -0.75rem rgba(0, 0, 0, .4);
 }
 .dock li { flex: 1; min-width: 0; }
 .dock a {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 8px 2px; border-radius: 999px; text-decoration: none;
-  color: var(--muted); font-family: var(--mono); font-size: 10.5px; line-height: 1.1;
+  display: flex; flex-direction: column; align-items: center; gap: 0.1875rem;
+  padding: 0.5rem 0.125rem; border-radius: 62.4375rem; text-decoration: none;
+  color: var(--muted); font-family: var(--mono); font-size: 0.6562rem; line-height: 1.1;
   transition: color .15s ease, background-color .15s ease;
 }
 .dock a:hover { color: var(--fg); }
 .dock a[aria-current="true"] { color: var(--accent); background: var(--accent-soft); }
-.dock svg { width: 22px; height: 22px; }
+.dock svg { width: 1.375rem; height: 1.375rem; }
 @media (max-width: 760px) {
   .dock { padding-left: 0; padding-right: 0; padding-bottom: 0; }
   .dock ul {
     max-width: none; border-radius: 0; border-width: 1px 0 0; box-shadow: none;
-    padding: 6px max(10px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
+    padding: 0.375rem max(0.625rem, env(safe-area-inset-right, 0px)) calc(0.375rem + env(safe-area-inset-bottom, 0px)) max(0.625rem, env(safe-area-inset-left, 0px));
   }
-  .dock a { border-radius: 14px; }
+  .dock a { border-radius: 0.875rem; }
 }
 @media (prefers-reduced-motion: reduce) { .dock a { transition: none; } }
 .theme {
-  font: inherit; font-family: var(--mono); font-size: 13px; cursor: pointer;
+  font: inherit; font-family: var(--mono); font-size: 0.8125rem; cursor: pointer;
   color: var(--muted); background: transparent; border: 1px solid var(--line);
-  border-radius: 8px; padding: 5px 10px;
+  border-radius: 0.5rem; padding: 0.3125rem 0.625rem;
 }
 .theme:hover { color: var(--fg); }
 
 /* hero */
-.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-top: 24px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 2.5rem; align-items: center; padding-top: 1.5rem; }
 .avail {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 13px; color: var(--fg);
-  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px 5px 10px;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: 0.8125rem; color: var(--fg);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 62.4375rem; padding: 0.3125rem 0.75rem 0.3125rem 0.625rem;
 }
-.avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--live); display: block; box-shadow: 0 0 0 4px color-mix(in srgb, var(--live) 22%, transparent); }
-.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1; font-weight: 700; margin-top: 18px; }
-.role { font-family: var(--display); font-weight: 500; font-size: clamp(1.15rem, 3.2vw, 1.5rem); color: var(--accent); margin-top: 14px; letter-spacing: -.01em; }
-.reach { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px; font-family: var(--mono); font-size: 14px; }
-.reach li { display: flex; gap: 14px; flex-wrap: wrap; min-width: 0; overflow-wrap: anywhere; }
-.reach span { color: var(--muted); min-width: 68px; }
-.lede { margin-top: 16px; color: var(--muted); max-width: 52ch; }
-.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.avail i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--live); display: block; box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--live) 22%, transparent); }
+.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1; font-weight: 700; margin-top: 1.125rem; }
+.role { font-family: var(--display); font-weight: 500; font-size: clamp(1.15rem, 3.2vw, 1.5rem); color: var(--accent); margin-top: 0.875rem; letter-spacing: -.01em; }
+.reach { list-style: none; margin: 1.125rem 0 0; padding: 0; display: grid; gap: 0.375rem; font-family: var(--mono); font-size: 0.875rem; }
+.reach li { display: flex; gap: 0.875rem; flex-wrap: wrap; min-width: 0; overflow-wrap: anywhere; }
+.reach span { color: var(--muted); min-width: 4.25rem; }
+.lede { margin-top: 1rem; color: var(--muted); max-width: 52ch; }
+.cta { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 1.625rem; }
 .btn {
-  font: inherit; font-weight: 500; font-size: 15px; text-decoration: none; cursor: pointer;
-  border-radius: 10px; padding: 11px 18px; border: 1px solid var(--line);
+  font: inherit; font-weight: 500; font-size: 0.9375rem; text-decoration: none; cursor: pointer;
+  border-radius: 0.625rem; padding: 0.6875rem 1.125rem; border: 1px solid var(--line);
   background: var(--surface); color: var(--fg);
 }
 .btn.primary { background: var(--accent); color: var(--accent-fg); border-color: transparent; }
 .btn:hover { filter: brightness(.96); }
 
 .code {
-  background: var(--code-bg); color: var(--code-fg); border-radius: 16px;
-  font-family: var(--mono); font-size: 13.5px; line-height: 1.7;
+  background: var(--code-bg); color: var(--code-fg); border-radius: 1rem;
+  font-family: var(--mono); font-size: 0.8438rem; line-height: 1.7;
   overflow-x: auto; min-width: 0; border: 1px solid var(--line);
 }
-.code .head { display: flex; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,.08); color: var(--code-dim); white-space: nowrap; }
+.code .head { display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 1.125rem; border-bottom: 1px solid rgba(255,255,255,.08); color: var(--code-dim); white-space: nowrap; }
 .code .ok { color: var(--code-key); }
-.code pre { margin: 0; padding: 16px 18px 20px; font: inherit; }
+.code pre { margin: 0; padding: 1rem 1.125rem 1.25rem; font: inherit; }
 .k { color: var(--code-key); } .s { color: var(--code-str); } .d { color: var(--code-dim); }
 
 /* Full-page 3D scene (Three.js): fixed behind all content, driven by scroll */
@@ -171,58 +172,82 @@ p { margin: 0; }
 
 /* Hover tilt on cards (set by script on devices with a mouse) */
 .tilt { transition: transform .18s ease-out, box-shadow .18s ease-out; will-change: transform; }
-.tilt.is-tilting { transition: transform .05s linear; box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); }
+.tilt.is-tilting { transition: transform .05s linear; box-shadow: 0 1.125rem 2.5rem -1.125rem rgba(0,0,0,.45); }
 
 /* sections */
-section > header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
-.route { font-family: var(--mono); font-size: 14px; color: var(--accent); }
+section > header { display: flex; align-items: baseline; gap: 0.875rem; flex-wrap: wrap; margin-bottom: 1.625rem; }
+.route { font-family: var(--mono); font-size: 0.875rem; color: var(--accent); }
 section h2 { font-size: clamp(1.7rem, 4.5vw, 2.3rem); font-weight: 700; }
-.about { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 68ch; font-size: 17px; }
+.about { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; max-width: 68ch; font-size: 1.0625rem; }
 
-.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
-.group { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
-.group h3 { font-size: 15px; font-family: var(--mono); font-weight: 500; letter-spacing: 0; color: var(--muted); margin-bottom: 12px; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { font-size: 14px; background: var(--accent-soft); color: var(--fg); border-radius: 8px; padding: 4px 10px; }
+.skills-box {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 1.125rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr)); gap: 1.75rem 2rem;
+}
+.skill-col { min-width: 0; }
+.skill-col h3 { font-size: 1.1rem; font-weight: 500; color: var(--accent); margin-bottom: 0.625rem; letter-spacing: -.01em; }
+.skill-col ul { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.375rem; }
+.skill-col li { font-size: 0.9688rem; }
+.skill-col li::marker { color: var(--accent); }
+@media (max-width: 760px) { .skills-box { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1.25rem; } }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip { font-size: 0.875rem; background: var(--accent-soft); color: var(--fg); border-radius: 0.5rem; padding: 0.25rem 0.625rem; }
 
 .timeline { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
-.job { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 8px 32px; padding: 26px 0; border-bottom: 1px solid var(--line); }
-.when { font-family: var(--mono); font-size: 13.5px; color: var(--muted); }
+.job { display: grid; grid-template-columns: 12.5rem minmax(0, 1fr); gap: 0.5rem 2rem; padding: 1.625rem 0; border-bottom: 1px solid var(--line); }
+.when { font-family: var(--mono); font-size: 0.8438rem; color: var(--muted); }
 .job h3 { font-size: 1.3rem; font-weight: 500; }
-.org { color: var(--muted); margin-top: 2px; }
-.job ul { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 8px; }
-.todo { font-family: var(--mono); font-size: 12px; color: var(--live); border: 1px dashed var(--live); border-radius: 6px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
+.org { color: var(--muted); margin-top: 0.125rem; }
+.job ul { margin: 0.875rem 0 0; padding-left: 1.25rem; display: grid; gap: 0.5rem; }
+.todo { font-family: var(--mono); font-size: 0.75rem; color: var(--live); border: 1px dashed var(--live); border-radius: 0.375rem; padding: 1px 0.4375rem; margin-left: 0.375rem; white-space: nowrap; }
 
-.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(16.25rem, 1fr)); gap: 1rem; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; padding: 1.375rem; display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
 .card.ph { border-style: dashed; background: transparent; }
 .card h3 { font-size: 1.2rem; font-weight: 500; }
-.card p { color: var(--muted); font-size: 15px; }
-.card .chips { margin-top: auto; padding-top: 6px; }
-.card .chip { font-family: var(--mono); font-size: 12.5px; }
+.card p { color: var(--muted); font-size: 0.9375rem; }
+.card .chips { margin-top: auto; padding-top: 0.375rem; }
+.card .chip { font-family: var(--mono); font-size: 0.7812rem; }
 
 .edu { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.edu .job { padding: 20px 0; }
-.certs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 28px; }
-.cert { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; font-weight: 500; }
-.cert small { display: block; font-family: var(--mono); font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.edu .job { padding: 1.25rem 0; }
+.certs { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.875rem; margin-top: 1.75rem; }
+.cert { background: var(--surface); border: 1px solid var(--line); border-radius: 0.875rem; padding: 1rem 1.125rem; font-weight: 500; }
+.cert small { display: block; font-family: var(--mono); font-weight: 400; font-size: 0.7812rem; color: var(--muted); }
 
-.contact { background: var(--code-bg); color: var(--code-fg); border-radius: 22px; padding: clamp(24px, 5vw, 44px); display: grid; gap: 20px; border: 1px solid var(--line); }
+.contact { background: var(--code-bg); color: var(--code-fg); border-radius: 1.375rem; padding: clamp(1.5rem, 5vw, 2.75rem); display: grid; gap: 1.25rem; border: 1px solid var(--line); }
 .contact h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); color: var(--code-fg); }
 .contact p { color: var(--code-dim); max-width: 50ch; }
-.contact .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.mail { font-family: var(--mono); font-size: 15px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 10px 14px; overflow-wrap: anywhere; color: var(--code-fg); }
+.contact .row { display: flex; flex-wrap: wrap; gap: 0.625rem; align-items: center; }
+.mail { font-family: var(--mono); font-size: 0.9375rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 0.625rem; padding: 0.625rem 0.875rem; overflow-wrap: anywhere; color: var(--code-fg); }
 .contact .btn { background: var(--code-key); color: #06201b; border-color: transparent; }
 .contact .btn.alt { background: transparent; color: var(--code-fg); border-color: rgba(255,255,255,.25); }
-footer { font-family: var(--mono); font-size: 13px; color: var(--muted); text-align: center; }
+footer { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); text-align: center; }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (orientation: portrait) {
   .hero { grid-template-columns: minmax(0, 1fr); }
   .job { grid-template-columns: minmax(0, 1fr); }
-  .wrap { gap: 56px; }
+  .wrap { gap: 3.5rem; }
 }
 body{margin:0}
 html{scroll-behavior:smooth}
+
+/* Each bottom-bar tab is its own page: only the active one is shown */
+.wrap > [data-view]:not(.is-active) { display: none; }
+.wrap > [data-view].is-active { animation: viewIn .4s cubic-bezier(.2, .7, .2, 1); }
+@keyframes viewIn { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .wrap > [data-view].is-active { animation: none; } }
+
+/* Landscape screens (laptops, TVs): tighten the opening screen so the buttons clear the bottom bar */
+@media (min-aspect-ratio: 5/4) {
+  .hero { padding-top: 0.25rem; }
+  .hero h1 { margin-top: 0.6rem; }
+  .role { margin-top: 0.5rem; }
+  .reach { margin-top: 0.8rem; }
+  .lede { margin-top: 0.8rem; }
+  .cta { margin-top: 1.2rem; }
+}
 </style>
 </head>
 <body>
@@ -234,7 +259,7 @@ html{scroll-behavior:smooth}
     <button class="theme" id="theme" type="button" aria-label="Switch theme">theme</button>
   </div>
 
-  <header class="hero" id="home">
+  <header class="hero is-active" id="home" data-view="home">
     <div>
       <span class="avail"><i></i>Immediate joiner</span>
       <h1>Kalash Dhangare</h1>
@@ -264,7 +289,7 @@ html{scroll-behavior:smooth}
     </div>
   </header>
 
-  <section id="about">
+  <section id="about" data-view="about">
     <header><span class="route">/about</span><h2>Software engineer who ships</h2></header>
     <div class="about">
       <p>I am a software engineer with a foundation in Python, Java, and data structures and algorithms. I learn by building: most recently I worked as a Python developer, where I built and shipped a live client website.</p>
@@ -272,18 +297,18 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section id="skills">
+  <section id="skills" data-view="skills">
     <header><span class="route">/skills</span><h2>What I work with</h2></header>
-    <div class="skills">
-      <div class="group"><h3>languages</h3><div class="chips"><span class="chip">Python</span><span class="chip">Java</span></div></div>
-      <div class="group"><h3>frameworks</h3><div class="chips"><span class="chip">Django</span><span class="chip">Flask</span></div></div>
-      <div class="group"><h3>databases</h3><div class="chips"><span class="chip">MySQL</span><span class="chip">MongoDB</span></div></div>
-      <div class="group"><h3>api &amp; tools</h3><div class="chips"><span class="chip">REST API</span><span class="chip">Postman</span><span class="chip">Google Cloud</span></div></div>
-      <div class="group"><h3>fundamentals</h3><div class="chips"><span class="chip">Data Structures</span><span class="chip">Algorithms</span></div></div>
+    <div class="skills-box">
+      <div class="skill-col"><h3>Languages</h3><ul><li>Python</li><li>Java</li></ul></div>
+      <div class="skill-col"><h3>Frameworks</h3><ul><li>Django</li><li>Flask</li></ul></div>
+      <div class="skill-col"><h3>Databases</h3><ul><li>MySQL</li><li>MongoDB</li></ul></div>
+      <div class="skill-col"><h3>API &amp; Tools</h3><ul><li>REST APIs</li><li>Postman</li><li>Google Cloud</li></ul></div>
+      <div class="skill-col"><h3>Fundamentals</h3><ul><li>Data Structures</li><li>Algorithms</li></ul></div>
     </div>
   </section>
 
-  <section id="experience">
+  <section id="experience" data-view="experience">
     <header><span class="route">/experience</span><h2>Where I have worked</h2></header>
     <div class="timeline">
       <article class="job">
@@ -310,7 +335,7 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section id="projects">
+  <section id="projects" data-view="projects">
     <header><span class="route">/projects</span><h2>Selected work</h2></header>
     <div class="projects">
       <article class="card">
@@ -335,7 +360,7 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section id="education">
+  <section id="education" data-view="about">
     <header><span class="route">/education</span><h2>Education &amp; certifications</h2></header>
     <div class="edu">
       <article class="job">
@@ -357,7 +382,7 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <section id="contact" class="contact">
+  <section id="contact" class="contact" data-view="contact">
     <h2>Ready to start immediately.</h2>
     <p>I am looking for a full stack or Python developer role. Send me a message and I will reply quickly.</p>
     <div class="row">
@@ -418,7 +443,7 @@ html{scroll-behavior:smooth}
   var renderer;
   try { renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true }); }
   catch (e) { canvas.remove(); return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth > 2000 ? 1.25 : 2));
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
@@ -491,10 +516,9 @@ html{scroll-behavior:smooth}
     if (!running) draw(0);
   }
 
-  // Sections the shape follows, and which side it sits on for each (1 = right, -1 = left).
-  var sections = [".hero", "#about", "#skills", "#experience", "#projects", "#education", "#contact"]
-    .map(function (s) { return document.querySelector(s); });
-  var sides = [1, 1, -1, 1, -1, 1, -1];
+  // Which side the shape sits on for each page (1 = right, -1 = left):
+  // home, about, skills, work, projects, contact.
+  var sides = [1, 1, -1, 1, -1, 1];
 
   var vw = 1, vh = 1;
   function resize() {
@@ -505,33 +529,25 @@ html{scroll-behavior:smooth}
     if (!running) draw(0);
   }
 
-  function activeSection() {
-    var mid = vh * 0.45, idx = 0;
-    for (var s = 0; s < sections.length; s++) {
-      if (sections[s] && sections[s].getBoundingClientRect().top <= mid) idx = s;
-    }
-    return idx;
-  }
-
   var mx = 0, my = 0, tx = 0, ty = 0, t0 = performance.now();
   window.addEventListener("pointermove", function (e) {
     mx = e.clientX / vw - 0.5;
     my = e.clientY / vh - 0.5;
   }, { passive: true });
 
-  var posX = 0, posY = 0, sc = 1, fade = 1, snapped = false;
+  var posX = 0, posY = 0, sc = 1, fade = 1, snapped = false, spin = 0, spinTarget = 0;
   function draw(now) {
     var t = (now - t0) / 1000;
     var scrollY = window.scrollY || 0;
     var halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
     var halfW = halfH * camera.aspect;
-    var wide = vw > 760;
-    var idx = activeSection();
+    var wide = vw > 760 && vw >= vh;   // landscape screens get the side-to-side layout
+    var idx = window.__viewIndex || 0;
 
     var targetX, targetY, targetS, targetFade;
     if (wide) {
       targetX = sides[idx] * halfW * (idx === 0 ? 0.42 : 0.74);
-      targetY = idx === 0 ? 0 : Math.sin(scrollY * 0.002) * halfH * 0.25;
+      targetY = idx === 0 ? 0 : Math.sin(idx * 1.7) * halfH * 0.18;
       targetS = idx === 0 ? 1 : 0.85;
       targetFade = idx === 0 ? 1 : 0.6;
     } else {
@@ -544,19 +560,20 @@ html{scroll-behavior:smooth}
     sc += (targetS - sc) * ease; fade += (targetFade - fade) * ease;
     snapped = true;
 
+    spin += (spinTarget - spin) * 0.06;
     tx += (mx * 0.6 - tx) * 0.05;
     ty += (my * 0.4 - ty) * 0.05;
 
     group.position.set(posX, posY, 0);
     group.scale.setScalar(sc);
-    group.rotation.y = 0.6 + t * 0.18 + scrollY * 0.002 + tx;
+    group.rotation.y = 0.6 + t * 0.18 + scrollY * 0.002 + spin + tx;
     group.rotation.x = 0.35 + ty + Math.sin(t * 0.3) * 0.05 + scrollY * 0.0004;
     inner.rotation.y = -t * 0.5;
     inner.rotation.x = t * 0.3 + scrollY * 0.001;
     ring.rotation.z = 0.8 + t * 0.25;
 
     // Dust drifts upward as the page scrolls, giving a sense of depth.
-    var off = (scrollY * 0.004) % FIELD;
+    var off = (scrollY * 0.004 + spin * 1.5) % FIELD;
     dustA.position.y = -off;
     dustB.position.y = -off + FIELD;
 
@@ -579,6 +596,11 @@ html{scroll-behavior:smooth}
   applyColors();
   resize();
   window.addEventListener("resize", resize);
+  // Every page change gives the shape a quarter turn.
+  window.addEventListener("viewchange", function () {
+    spinTarget += 1.2;
+    if (reduce) { snapped = false; spin = spinTarget; draw(0); }
+  });
   if (reduce) window.addEventListener("scroll", function () { draw(0); }, { passive: true });
   document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
 
@@ -595,7 +617,7 @@ html{scroll-behavior:smooth}
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
   var MAX = 6; // degrees
-  document.querySelectorAll(".group, .card, .cert, .code").forEach(function (el) {
+  document.querySelectorAll(".card, .cert, .code").forEach(function (el) {
     el.classList.add("tilt");
     el.addEventListener("pointermove", function (e) {
       var r = el.getBoundingClientRect();
@@ -613,23 +635,48 @@ html{scroll-behavior:smooth}
 </script>
 
 <script>
-/* Highlight the bottom-bar tab for the section currently in view. */
+/* Page switcher: each bottom-bar tab shows one page. Back/forward and direct links (#projects) work. */
 (function () {
+  var order = ["home", "about", "skills", "experience", "projects", "contact"];
+  var alias = { education: "about" };
+  var views = [].slice.call(document.querySelectorAll("[data-view]"));
   var links = [].slice.call(document.querySelectorAll(".dock a"));
-  var targets = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
-  function update() {
-    var mid = window.innerHeight * 0.45, idx = 0;
-    for (var i = 0; i < targets.length; i++) {
-      if (targets[i] && targets[i].getBoundingClientRect().top <= mid) idx = i;
-    }
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) idx = targets.length - 1;
-    links.forEach(function (a, i) {
-      if (i === idx) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
-    });
+  var current = null;
+
+  function resolve(name) {
+    name = alias[name] || name;
+    return order.indexOf(name) === -1 ? "home" : name;
   }
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  update();
+  function show(name) {
+    name = resolve(name);
+    if (name === current) return;
+    current = name;
+    views.forEach(function (v) { v.classList.toggle("is-active", v.getAttribute("data-view") === name); });
+    links.forEach(function (a) {
+      if (a.getAttribute("href") === "#" + name) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+    var idx = order.indexOf(name);
+    window.__viewIndex = idx;
+    window.dispatchEvent(new CustomEvent("viewchange", { detail: { index: idx } }));
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }
+  function fromHash() { return (location.hash || "#home").slice(1); }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var name = a.getAttribute("href").slice(1);
+    if (order.indexOf(alias[name] || name) === -1) return;
+    e.preventDefault();
+    if (location.hash !== "#" + name) {
+      try { history.pushState(null, "", "#" + name); } catch (err) { location.hash = name; }
+    }
+    show(name);
+  });
+  window.addEventListener("popstate", function () { show(fromHash()); });
+  window.addEventListener("hashchange", function () { show(fromHash()); });
+  show(fromHash());
 })();
 </script>
 </body>
